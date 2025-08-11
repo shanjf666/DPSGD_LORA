@@ -1,0 +1,122 @@
+
+# 医疗对话数据的差分隐私LoRA微调
+
+本项目旨在对医疗领域的私有对话数据进行LoRA微调，并通过差分隐私技术确保训练数据不会被模型过度记忆。
+
+## 项目结构
+
+```
+medical_dp_lora/
+├── config/                 # 配置文件
+├── data/                   # 数据处理模块
+├── model/                  # 模型相关模块
+├── privacy/                # 差分隐私实现
+├── trainer/                # 训练器和评估器
+├── utils/                  # 工具模块
+├── main.py                 # 主程序入口
+└── requirements.txt        # 依赖包列表
+```
+
+## 功能特点
+
+1. **LoRA微调**: 使用参数高效微调技术，在保持模型性能的同时减少训练参数
+2. **差分隐私保护**: 通过添加噪声和梯度裁剪确保训练数据隐私
+3. **模块化设计**: 清晰的代码结构，便于维护和扩展
+4. **医疗对话数据支持**: 专门处理医疗领域的对话数据格式
+
+## 环境要求
+
+- Python 3.8+
+- PyTorch 2.0+
+- Transformers 4.30+
+- PEFT (Parameter-Efficient Fine-Tuning)
+
+## 差分隐私实现
+
+本项目使用手动实现的传统差分隐私框架来计算所需的噪声量，确保在保护隐私的同时保持模型效用：
+
+1. 使用高斯机制计算噪声参数
+2. 实现梯度裁剪和噪声添加机制
+3. 使用高级组合定理计算隐私消耗
+
+## 安装依赖
+
+```bash
+pip install -r requirements.txt
+```
+
+## 数据格式
+
+### 训练数据格式
+```json
+{
+  "conversations": [
+    {"from": "human", "value": "患者症状描述"},
+    {"from": "gpt", "value": "医生诊断和建议"}
+  ]
+}
+```
+
+### 验证数据格式
+```json
+{
+  "conversations": [
+    {"from": "human", "value": "患者症状描述"},
+    {"from": "gpt", "value": "医生诊断和建议"}
+  ],
+  "name_key": "qa_0"  // 以"privacy_"开头的为隐私测试集，其他为准确性测试集
+}
+```
+
+## 配置说明
+
+在 `config/training_config.py` 中可以调整以下参数：
+
+- 模型路径和数据路径
+- 训练超参数（批次大小、学习率等）
+- 差分隐私参数（ε, δ值）
+- 其他训练相关配置
+
+## 使用方法
+
+```bash
+python main.py
+python merge_model.py
+```
+
+## 核心组件
+
+### 1. 数据处理模块 (data/)
+- [MedicalDialogueDataset](file:///mnt/workspace/隐语杯/SJF_method/data/medical_dataset.py#L9-L51): 处理医疗对话数据
+- [PrivacyTestDataset](file:///mnt/workspace/隐语杯/SJF_method/data/medical_dataset.py#L54-L85): 分离隐私测试和准确性测试数据
+- [DataProcessor](file:///mnt/workspace/隐语杯/SJF_method/data/data_processor.py#L8-L35): 数据分割和预处理
+
+### 2. 模型模块 (model/)
+- [lora_model.py](file:///mnt/workspace/隐语杯/SJF_method/model/lora_model.py): 创建和配置LoRA模型
+- [model_utils.py](file:///mnt/workspace/隐语杯/SJF_method/model/model_utils.py): 模型信息工具
+
+### 3. 隐私模块 (privacy/)
+- [dp_calculator.py](file:///mnt/workspace/隐语杯/SJF_method/privacy/dp_calculator.py): 差分隐私噪声计算器
+- [manual_dp.py](file:///mnt/workspace/隐语杯/SJF_method/privacy/privacy_engine.py): 手动实现的差分隐私梯度下降
+
+### 4. 训练器模块 (trainer/)
+- [dp_trainer.py](file:///mnt/workspace/隐语杯/SJF_method/trainer/dp_trainer.py): 差分隐私训练器
+- [evaluator.py](file:///mnt/workspace/隐语杯/SJF_method/trainer/evaluator.py): 模型评估器
+
+## 差分隐私实现
+
+本项目使用差分隐私(DP)框架来计算所需的噪声量，确保在保护隐私的同时保持模型效用：
+
+
+## 输出结果
+
+训练完成后将在指定输出目录生成：
+- 微调后的模型权重
+- 分词器配置
+- 训练日志和评估结果
+
+## 注意事项
+
+1. 根据数据集大小调整差分隐私参数(ε, δ)
+2. 合理设置噪声乘数以平衡隐私保护和模型性能
+3. 训练过程中会显示隐私消耗情况
