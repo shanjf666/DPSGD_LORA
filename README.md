@@ -1,127 +1,122 @@
-# 医疗对话数据的差分隐私LoRA微调
+# DPSGD-LoRA: 差分隐私LoRA微调医疗对话模型
 
-本项目旨在对医疗领域的私有对话数据进行LoRA微调，并通过差分隐私技术确保训练数据不会被模型过度记忆。
+本项目实现了一个基于LoRA微调和差分隐私保护的医疗对话模型训练系统。通过结合参数高效微调技术和差分隐私机制，在保护训练数据隐私的同时保持模型性能。
 
-## 项目结构
+## 项目简介
 
-```
-medical_dp_lora/
-├── config/                 # 配置文件
-├── data/                   # 数据处理模块
-├── model/                  # 模型相关模块
-├── privacy/                # 差分隐私实现
-├── trainer/                # 训练器和评估器
-├── utils/                  # 工具模块
-├── main.py                 # 主程序入口
-└── requirements.txt        # 依赖包列表
-```
+随着大语言模型在医疗领域的广泛应用，如何在训练过程中保护患者隐私成为一个重要问题。本项目采用LoRA（Low-Rank Adaptation）参数高效微调技术和差分隐私（Differential Privacy）机制，构建了一个兼顾模型性能和数据隐私的医疗对话系统。
 
-## 功能特点
+### 核心特性
 
-1. **LoRA微调**: 使用参数高效微调技术，在保持模型性能的同时减少训练参数
-2. **差分隐私保护**: 通过添加噪声和梯度裁剪确保训练数据隐私
-3. **模块化设计**: 清晰的代码结构，便于维护和扩展
-4. **医疗对话数据支持**: 专门处理医疗领域的对话数据格式
+- **LoRA微调**: 使用低秩适应技术进行参数高效微调，大幅减少训练参数量
+- **差分隐私保护**: 实现传统差分隐私机制，防止模型泄露训练数据中的敏感信息
+- **医疗对话建模**: 专门针对医疗对话场景进行训练和优化
+- **模型合并与部署**: 支持将LoRA适配器与基础模型合并，便于实际部署
 
-## 环境要求
+## 快速开始
 
-- Python 3.8+
-- PyTorch 2.0+
-- Transformers 4.30+
-- PEFT (Parameter-Efficient Fine-Tuning)
-
-## 差分隐私实现
-
-本项目使用手动实现的传统差分隐私框架来计算所需的噪声量，确保在保护隐私的同时保持模型效用：
-
-1. 使用高斯机制计算噪声参数
-2. 实现梯度裁剪和噪声添加机制
-3. 使用高级组合定理计算隐私消耗
-
-## 安装依赖
+### 环境安装
 
 ```bash
+# 克隆项目
+git clone https://github.com/shanjf666/DPSGD_LORA.git
+cd DPSGD_LORA
+
+# 安装依赖
 pip install -r requirements.txt
 ```
 
-## 数据格式
+### 数据准备
 
-### 训练数据格式
+给定JSONL格式的对话数据train.jsonl，每行包含一个对话样本：
+
 ```json
 {
   "conversations": [
-    {"from": "human", "value": "患者症状描述"},
-    {"from": "gpt", "value": "医生诊断和建议"}
+    {"from": "human", "value": "患者问题"},
+    {"from": "assistant", "value": "医生回答"}
   ]
 }
 ```
 
-### 测试数据格式
-```json
-{
-  "conversations": [
-    {"from": "human", "value": "患者症状描述"},
-    {"from": "gpt", "value": "医生诊断和建议"}
-  ],
-  "name_key": "qa_0"
-}
+使用 `extract.py` 脚本从train.jsonl数据集中提取对话数据集privacy_train.jsonl：
+
+```bash
+python extract.py
 ```
 
-## 配置说明
+### 配置修改
 
-在 `config/training_config.py` 中可以调整以下参数：
+修改 `config/training_config.py` 中的配置参数：
 
-- 模型路径和数据路径
-- 训练超参数（批次大小、学习率等）
-- 差分隐私参数（ε, δ值）
-- 其他训练相关配置
+参考文档 config.md
 
-## 使用方法
+### 模型训练
 
 ```bash
 python main.py
 ```
 
-## 核心组件
+训练过程包括：
+1. 加载基础模型并应用LoRA适配器
+2. 处理和分割训练数据
+3. 计算差分隐私噪声参数
+4. 使用手动实现的DPSGD进行训练
+5. 评估模型性能
+6. 合并LoRA适配器到基础模型
 
-### 1. 数据处理模块 (data/)
-- `MedicalDialogueDataset`: 处理医疗对话数据
-- `PrivacyTestDataset`: 分离隐私测试和准确性测试数据
-- `DataProcessor`: 数据分割和预处理
+### 模型推理
 
-### 2. 模型模块 (model/)
-- `lora_model.py`: 创建和配置LoRA模型
-- `model_utils.py`: 模型信息工具
-- `model_merger.py`: 合并LoRA适配器到基础模型
+使用 infer_vllm.py 脚本进行高效推理：
 
-### 3. 隐私模块 (privacy/)
-- `dp_calculator.py`: 差分隐私噪声计算器
-- `manual_dp.py`: 手动实现的差分隐私梯度下降
+```bash
+python infer_vllm.py \
+  --model_path /root/autodl-tmp/model \
+  --data_path /root/autodl-tmp/data/valid.jsonl \
+  --output_path /root/autodl-tmp/infer/base.jsonl
 
-### 4. 训练器模块 (trainer/)
-- `dp_trainer.py`: 差分隐私训练器
-- `evaluator.py`: 模型评估器
+python infer_vllm.py \
+  --model_path /root/autodl-tmp/final/model8 \
+  --data_path /root/autodl-tmp/data/valid.jsonl \
+  --output_path /root/autodl-tmp/infer/result8.jsonl
+```
 
-## 差分隐私实现
+### 对回答进行评分
 
-本项目使用差分隐私(DP)框架来计算所需的噪声量，确保在保护隐私的同时保持模型效用：
+使用 score.py 脚本进行评分：
 
-1. 使用高斯机制计算满足(ε, δ)-差分隐私所需的噪声标准差
-2. 实现梯度裁剪以限制敏感度
-3. 向梯度添加高斯噪声
-4. 使用高级组合定理计算总的隐私消耗
+```bash
+python score.py \
+  --model_name qwen/Qwen2.5-1.5B-Instruct \
+  --test_data /root/autodl-tmp/data/valid.jsonl \
+  --user_out_path /root/autodl-tmp/infer/result8.jsonl \
+  --we_out_path /root/autodl-tmp/infer/base.jsonl \
+  --out_path /root/autodl-tmp/score/score8.jsonl
+```
 
-## 输出结果
+## 项目架构
 
-训练完成后将在指定输出目录生成：
-- 微调后的模型权重
-- 分词器配置
-- 训练日志和评估结果
-- 合并后的完整模型（包含LoRA权重）
-
-## 注意事项
-
-1. 根据数据集大小调整差分隐私参数(ε, δ)
-2. 合理设置噪声乘数以平衡隐私保护和模型性能
-3. 训练过程中会显示隐私消耗情况
-4. 项目会自动合并LoRA适配器到基础模型中，生成完整的微调模型
+```
+DPSGD_LORA/
+├── config/                 # 训练配置
+│   └── training_config.py
+├── data/                   # 数据处理模块
+│   ├── medical_dataset.py
+│   └── data_processor.py
+├── model/                  # 模型相关模块
+│   ├── lora_model.py
+│   ├── model_merger.py
+│   └── model_utils.py
+├── privacy/                # 差分隐私实现
+│   ├── dp_calculator.py
+│   └── manual_dp.py
+├── trainer/                # 训练器模块
+│   ├── dp_trainer.py
+│   └── evaluator.py
+├── utils/                  # 工具函数
+│   └── logger.py
+├── main.py                 # 训练主程序
+├── extract.py              # 数据提取工具
+├── infer_vllm.py           # 模型推理脚本
+└── score.py                # 评分工具
+```
