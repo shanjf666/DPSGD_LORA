@@ -1,4 +1,3 @@
-
 # 医疗对话数据的差分隐私LoRA微调
 
 本项目旨在对医疗领域的私有对话数据进行LoRA微调，并通过差分隐私技术确保训练数据不会被模型过度记忆。
@@ -57,7 +56,7 @@ pip install -r requirements.txt
 }
 ```
 
-### 验证数据格式
+### 测试数据格式
 ```json
 {
   "conversations": [
@@ -81,32 +80,36 @@ pip install -r requirements.txt
 
 ```bash
 python main.py
-python merge_model.py
 ```
 
 ## 核心组件
 
 ### 1. 数据处理模块 (data/)
-- [MedicalDialogueDataset](file:///mnt/workspace/隐语杯/SJF_method/data/medical_dataset.py#L9-L51): 处理医疗对话数据
-- [PrivacyTestDataset](file:///mnt/workspace/隐语杯/SJF_method/data/medical_dataset.py#L54-L85): 分离隐私测试和准确性测试数据
-- [DataProcessor](file:///mnt/workspace/隐语杯/SJF_method/data/data_processor.py#L8-L35): 数据分割和预处理
+- `MedicalDialogueDataset`: 处理医疗对话数据
+- `PrivacyTestDataset`: 分离隐私测试和准确性测试数据
+- `DataProcessor`: 数据分割和预处理
 
 ### 2. 模型模块 (model/)
-- [lora_model.py](file:///mnt/workspace/隐语杯/SJF_method/model/lora_model.py): 创建和配置LoRA模型
-- [model_utils.py](file:///mnt/workspace/隐语杯/SJF_method/model/model_utils.py): 模型信息工具
+- `lora_model.py`: 创建和配置LoRA模型
+- `model_utils.py`: 模型信息工具
+- `model_merger.py`: 合并LoRA适配器到基础模型
 
 ### 3. 隐私模块 (privacy/)
-- [dp_calculator.py](file:///mnt/workspace/隐语杯/SJF_method/privacy/dp_calculator.py): 差分隐私噪声计算器
-- [manual_dp.py](file:///mnt/workspace/隐语杯/SJF_method/privacy/privacy_engine.py): 手动实现的差分隐私梯度下降
+- `dp_calculator.py`: 差分隐私噪声计算器
+- `manual_dp.py`: 手动实现的差分隐私梯度下降
 
 ### 4. 训练器模块 (trainer/)
-- [dp_trainer.py](file:///mnt/workspace/隐语杯/SJF_method/trainer/dp_trainer.py): 差分隐私训练器
-- [evaluator.py](file:///mnt/workspace/隐语杯/SJF_method/trainer/evaluator.py): 模型评估器
+- `dp_trainer.py`: 差分隐私训练器
+- `evaluator.py`: 模型评估器
 
 ## 差分隐私实现
 
 本项目使用差分隐私(DP)框架来计算所需的噪声量，确保在保护隐私的同时保持模型效用：
 
+1. 使用高斯机制计算满足(ε, δ)-差分隐私所需的噪声标准差
+2. 实现梯度裁剪以限制敏感度
+3. 向梯度添加高斯噪声
+4. 使用高级组合定理计算总的隐私消耗
 
 ## 输出结果
 
@@ -114,9 +117,11 @@ python merge_model.py
 - 微调后的模型权重
 - 分词器配置
 - 训练日志和评估结果
+- 合并后的完整模型（包含LoRA权重）
 
 ## 注意事项
 
 1. 根据数据集大小调整差分隐私参数(ε, δ)
 2. 合理设置噪声乘数以平衡隐私保护和模型性能
 3. 训练过程中会显示隐私消耗情况
+4. 项目会自动合并LoRA适配器到基础模型中，生成完整的微调模型
