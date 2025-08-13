@@ -49,7 +49,7 @@ python extract.py
 
 修改 `config/training_config.py` 中的配置参数：
 
-参考文档 config.md
+参考文档 `config.md`
 
 ### 模型训练
 
@@ -67,7 +67,7 @@ python main.py
 
 ### 模型推理
 
-使用 infer_vllm.py 脚本进行高效推理：
+使用 `infer_vllm.py` 脚本进行高效推理：
 
 ```bash
 python infer_vllm.py \
@@ -83,7 +83,7 @@ python infer_vllm.py \
 
 ### 对回答进行评分
 
-使用 score.py 脚本进行评分：
+使用 `score.py` 脚本进行评分：
 
 ```bash
 python score.py \
