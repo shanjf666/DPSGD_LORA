@@ -38,8 +38,7 @@ pip install -r requirements.txt
   ]
 }
 ```
-
-使用 `extract.py` 脚本从train.jsonl数据集中提取对话数据集privacy_train.jsonl：
+使用 `extract.py` 脚本从 `train.jsonl` 数据集中提取对话数据，生成隐私保护的训练数据集 `privacy_train.jsonl`：
 
 ```bash
 python extract.py
@@ -47,9 +46,7 @@ python extract.py
 
 ### 配置修改
 
-修改 `config/training_config.py` 中的配置参数：
-
-参考文档 `config.md`
+修改 `config/training_config.py` 中的配置参数，详细配置说明请参考文档 `config.md`
 
 ### 模型训练
 
