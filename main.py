@@ -5,7 +5,7 @@
 from config.training_config import TrainingConfig
 from data import MedicalDialogueDataset, DataProcessor
 from model import create_lora_model, ModelUtils, ModelMerger
-from privacy import BasicDPNoiseCalculator
+from privacy import DPNoiseCalculator
 from trainer import DPTrainer, Evaluator
 import torch
 
@@ -50,14 +50,14 @@ def main():
     print("计算传统差分隐私参数...")
     
     # 计算噪声乘数
-    noise_multiplier = BasicDPNoiseCalculator.compute_noise_multiplier(
+    noise_multiplier = DPNoiseCalculator.compute_noise_multiplier(
         target_epsilon=config.TARGET_EPSILON,
         target_delta=config.TARGET_DELTA,
         max_grad_norm=config.MAX_GRAD_NORM
     )
     
     # 计算放大后的epsilon
-    amplified_epsilon = BasicDPNoiseCalculator.amplify_epsilon(
+    amplified_epsilon = DPNoiseCalculator.amplify_epsilon(
         config.TARGET_EPSILON, sample_rate
     )
     

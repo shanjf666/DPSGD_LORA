@@ -28,7 +28,7 @@ class MedicalDialogueDataset(Dataset):
         for turn in conversations:
             if turn['from'] == 'human':
                 formatted += f"Human: {turn['value']}\n"
-            else:  # gpt
+            else:
                 formatted += f"Assistant: {turn['value']}\n"
         return formatted.strip()
     

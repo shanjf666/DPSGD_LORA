@@ -4,7 +4,7 @@
 """
 import math
 
-class BasicDPNoiseCalculator:
+class DPNoiseCalculator:
     
     @staticmethod
     def compute_noise_std(
@@ -18,7 +18,7 @@ class BasicDPNoiseCalculator:
         Args:
             target_epsilon: 目标epsilon值
             target_delta: 目标delta值
-            max_grad_norm: 最大梯度范数（L2敏感度）
+            max_grad_norm: 最大梯度范数(L2敏感度)
             
         Returns:
             noise_std: 噪声标准差
@@ -34,7 +34,7 @@ class BasicDPNoiseCalculator:
         max_grad_norm: float
     ) -> float:
         """
-        计算噪声乘数（与Opacus兼容）
+        计算噪声乘数
         
         Args:
             target_epsilon: 目标epsilon值
@@ -44,7 +44,7 @@ class BasicDPNoiseCalculator:
         Returns:
             noise_multiplier: 噪声乘数
         """
-        noise_std = BasicDPNoiseCalculator.compute_noise_std(
+        noise_std = DPNoiseCalculator.compute_noise_std(
             target_epsilon, target_delta, max_grad_norm
         )
         # 噪声乘数 = 噪声标准差 / 梯度裁剪范数

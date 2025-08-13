@@ -13,7 +13,6 @@ class DPTrainer:
         self.config = config
         self.trainer = None
         self.privacy_engine = None
-        # 删除 use_manual_dp 参数，因为我们只使用手动DP实现
     
     def setup_training(self, model, train_dataset, val_dataset, tokenizer):
         """
@@ -63,7 +62,7 @@ class DPTrainer:
     
     def apply_manual_privacy(self, model, optimizer, train_dataset, noise_multiplier):
         """
-        应用手动差分隐私
+        应用差分隐私
         
         Args:
             model: 模型
@@ -71,7 +70,7 @@ class DPTrainer:
             train_dataset: 训练数据集
             noise_multiplier: 噪声乘数
         """
-        from privacy.manual_dp import make_private_manual
+        from privacy.manual_dp import make_private
         
         # 创建数据加载器
         data_loader = DataLoader(
@@ -81,7 +80,7 @@ class DPTrainer:
         )
         
         # 应用隐私保护
-        private_model, private_optimizer, private_data_loader, privacy_engine = make_private_manual(
+        private_model, private_optimizer, private_data_loader, privacy_engine = make_private(
             model, optimizer, data_loader, noise_multiplier, self.config.MAX_GRAD_NORM
         )
         
@@ -102,7 +101,7 @@ class DPTrainer:
         # 设置训练
         training_args = self.setup_training(model, train_dataset, val_dataset, tokenizer)
         
-        # 应用手动隐私引擎（现在是必需的，因为我们只使用手动DP）
+        # 应用手动隐私引擎
         if hasattr(self.trainer, 'optimizer'):
             private_model, private_optimizer, private_data_loader = self.apply_manual_privacy(
                 model, self.trainer.optimizer, train_dataset, noise_multiplier

@@ -8,7 +8,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 from peft import PeftModel
 
 class ModelMerger:
-    """模型合并器"""
+    """模型合并"""
     
     @staticmethod
     def merge_lora_model(base_model_path, lora_adapter_path, merged_model_path):

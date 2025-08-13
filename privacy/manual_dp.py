@@ -2,7 +2,7 @@
 import torch
 import math
 
-class ManualPrivacyEngine:
+class PrivacyEngine:
     
     def __init__(self, noise_multiplier, max_grad_norm):
         self.noise_multiplier = noise_multiplier
@@ -13,13 +13,15 @@ class ManualPrivacyEngine:
         """裁剪模型梯度"""
         if self.max_grad_norm <= 0:
             return
-            
+
+        //对整个批次梯度的L2范数总和进行裁剪
+        //相对于逐样本梯度裁剪，这个方法牺牲了一定的隐私保护但计算效率高
         total_norm = 0
         for p in model.parameters():
             if p.grad is not None:
                 param_norm = p.grad.data.norm(2)
                 total_norm += param_norm.item() ** 2
-        total_norm = total_norm ** (1. / 2)
+        total_norm = total_norm ** (1. / 2)   //计算所有参数梯度的L2范数总和
         
         if total_norm > self.max_grad_norm:
             clip_coef = self.max_grad_norm / (total_norm + 1e-6)
@@ -74,7 +76,7 @@ class ManualPrivacyEngine:
             # 如果计算溢出，使用简化公式
             return self.steps * epsilon_per_step * 2
 
-def make_private_manual(model, optimizer, data_loader, noise_multiplier, max_grad_norm):
+def make_private(model, optimizer, data_loader, noise_multiplier, max_grad_norm):
     """
     创建手动私有化训练组件
     
@@ -88,5 +90,5 @@ def make_private_manual(model, optimizer, data_loader, noise_multiplier, max_gra
     Returns:
         private_model, private_optimizer, private_data_loader, privacy_engine
     """
-    privacy_engine = ManualPrivacyEngine(noise_multiplier, max_grad_norm)
+    privacy_engine = PrivacyEngine(noise_multiplier, max_grad_norm)
     return model, optimizer, data_loader, privacy_engine
