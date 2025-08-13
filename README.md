@@ -63,7 +63,7 @@ pip install -r requirements.txt
     {"from": "human", "value": "患者症状描述"},
     {"from": "gpt", "value": "医生诊断和建议"}
   ],
-  "name_key": "qa_0"  // 以"privacy_"开头的为隐私测试集，其他为准确性测试集
+  "name_key": "qa_0"
 }
 ```
 
