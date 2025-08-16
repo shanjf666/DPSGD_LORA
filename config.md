@@ -20,9 +20,9 @@ class TrainingConfig:
     MERGED_MODEL_PATH = "/root/autodl-tmp/final/model1"
     
     # 训练参数（优化内存使⽤） 
-    PER_DEVICE_TRAIN_BATCH_SIZE = 2
+    PER_DEVICE_TRAIN_BATCH_SIZE = 1
     PER_DEVICE_EVAL_BATCH_SIZE = 1
-    GRADIENT_ACCUMULATION_STEPS = 8
+    GRADIENT_ACCUMULATION_STEPS = 16
     NUM_TRAIN_EPOCHS = 2
     LEARNING_RATE = 2e-4
     MAX_LENGTH = 256
@@ -61,9 +61,9 @@ class TrainingConfig:
     MERGED_MODEL_PATH = "/root/autodl-tmp/final/model2"
     
     # 训练参数（优化内存使用）
-    PER_DEVICE_TRAIN_BATCH_SIZE = 2
+    PER_DEVICE_TRAIN_BATCH_SIZE = 1
     PER_DEVICE_EVAL_BATCH_SIZE = 1
-    GRADIENT_ACCUMULATION_STEPS = 8
+    GRADIENT_ACCUMULATION_STEPS = 16
     NUM_TRAIN_EPOCHS = 2
     LEARNING_RATE = 2e-4
     MAX_LENGTH = 256
@@ -102,9 +102,9 @@ class TrainingConfig:
     MERGED_MODEL_PATH = "/root/autodl-tmp/final/model3"
     
     # 训练参数（优化内存使用）
-    PER_DEVICE_TRAIN_BATCH_SIZE = 2
+    PER_DEVICE_TRAIN_BATCH_SIZE = 1
     PER_DEVICE_EVAL_BATCH_SIZE = 1
-    GRADIENT_ACCUMULATION_STEPS = 8
+    GRADIENT_ACCUMULATION_STEPS = 16
     NUM_TRAIN_EPOCHS = 2
     LEARNING_RATE = 2e-4
     MAX_LENGTH = 256
@@ -143,9 +143,9 @@ class TrainingConfig:
     MERGED_MODEL_PATH = "/root/autodl-tmp/final/model4"
     
     # 训练参数（优化内存使用）
-    PER_DEVICE_TRAIN_BATCH_SIZE = 2
+    PER_DEVICE_TRAIN_BATCH_SIZE = 1
     PER_DEVICE_EVAL_BATCH_SIZE = 1
-    GRADIENT_ACCUMULATION_STEPS = 8
+    GRADIENT_ACCUMULATION_STEPS = 16
     NUM_TRAIN_EPOCHS = 2
     LEARNING_RATE = 2e-4
     MAX_LENGTH = 256
@@ -184,9 +184,9 @@ class TrainingConfig:
     MERGED_MODEL_PATH = "/root/autodl-tmp/final/model5"
     
     # 训练参数（优化内存使用）
-    PER_DEVICE_TRAIN_BATCH_SIZE = 2
+    PER_DEVICE_TRAIN_BATCH_SIZE = 1
     PER_DEVICE_EVAL_BATCH_SIZE = 1
-    GRADIENT_ACCUMULATION_STEPS = 8
+    GRADIENT_ACCUMULATION_STEPS = 16
     NUM_TRAIN_EPOCHS = 2
     LEARNING_RATE = 2e-4
     MAX_LENGTH = 256
@@ -225,9 +225,9 @@ class TrainingConfig:
     MERGED_MODEL_PATH = "/root/autodl-tmp/final/model6"
     
     # 训练参数（优化内存使用）
-    PER_DEVICE_TRAIN_BATCH_SIZE = 2
+    PER_DEVICE_TRAIN_BATCH_SIZE = 1
     PER_DEVICE_EVAL_BATCH_SIZE = 1
-    GRADIENT_ACCUMULATION_STEPS = 8
+    GRADIENT_ACCUMULATION_STEPS = 16
     NUM_TRAIN_EPOCHS = 2
     LEARNING_RATE = 2e-4
     MAX_LENGTH = 256
@@ -266,9 +266,9 @@ class TrainingConfig:
     MERGED_MODEL_PATH = "/root/autodl-tmp/final/model7"
     
     # 训练参数（优化内存使用）
-    PER_DEVICE_TRAIN_BATCH_SIZE = 2
+    PER_DEVICE_TRAIN_BATCH_SIZE = 1
     PER_DEVICE_EVAL_BATCH_SIZE = 1
-    GRADIENT_ACCUMULATION_STEPS = 8
+    GRADIENT_ACCUMULATION_STEPS = 16
     NUM_TRAIN_EPOCHS = 2
     LEARNING_RATE = 2e-4
     MAX_LENGTH = 256
@@ -307,9 +307,9 @@ class TrainingConfig:
     MERGED_MODEL_PATH = "/root/autodl-tmp/final/model8"
     
     # 训练参数（优化内存使用）
-    PER_DEVICE_TRAIN_BATCH_SIZE = 2
+    PER_DEVICE_TRAIN_BATCH_SIZE = 1
     PER_DEVICE_EVAL_BATCH_SIZE = 1
-    GRADIENT_ACCUMULATION_STEPS = 8
+    GRADIENT_ACCUMULATION_STEPS = 16
     NUM_TRAIN_EPOCHS = 2
     LEARNING_RATE = 2e-4
     MAX_LENGTH = 256

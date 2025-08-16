@@ -14,14 +14,12 @@ class PrivacyEngine:
         if self.max_grad_norm <= 0:
             return
 
-        //对整个批次梯度的L2范数总和进行裁剪
-        //相对于逐样本梯度裁剪，这个方法牺牲了一定的隐私保护但计算效率高
         total_norm = 0
         for p in model.parameters():
             if p.grad is not None:
                 param_norm = p.grad.data.norm(2)
                 total_norm += param_norm.item() ** 2
-        total_norm = total_norm ** (1. / 2)   //计算所有参数梯度的L2范数总和
+        total_norm = total_norm ** (1. / 2)
         
         if total_norm > self.max_grad_norm:
             clip_coef = self.max_grad_norm / (total_norm + 1e-6)
