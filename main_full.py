@@ -1,9 +1,9 @@
-# main_full.py (补充完整)
+# main_full.py (修改后的完整版本)
 import os
 import sys
 from config.full_training_config import FullTrainingConfig
 from model.full_model import create_full_model
-from data.medical_dataset import MedicalDataset
+from data.medical_dataset import MedicalDialogueDataset  # 修改为正确类名
 from trainer.dp_trainer import DPTrainer
 from privacy.dp_calculator import DPNoiseCalculator
 from privacy.manual_dp import make_private
@@ -32,12 +32,12 @@ def main():
     
     # 加载数据集
     logger.info("加载训练数据集...")
-    train_dataset = MedicalDataset(config.train_data_path, tokenizer, config.max_length)
+    train_dataset = MedicalDialogueDataset(config.train_data_path, tokenizer, config.max_length)  # 修改为正确类名
     
     eval_dataset = None
     if config.eval_data_path and os.path.exists(config.eval_data_path):
         logger.info("加载验证数据集...")
-        eval_dataset = MedicalDataset(config.eval_data_path, tokenizer, config.max_length)
+        eval_dataset = MedicalDialogueDataset(config.eval_data_path, tokenizer, config.max_length)  # 修改为正确类名
     
     logger.info(f"训练数据集大小: {len(train_dataset)}")
     if eval_dataset:
