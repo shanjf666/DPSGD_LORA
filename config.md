@@ -29,7 +29,7 @@ class TrainingConfig:
     
     # LoRA微调参数 
     LORA_R = 8
-    LORA_ALPHA = 32
+    LORA_ALPHA = 16
     LORA_DROPOUT = 0.1
     LORA_TARGET_MODULES = ["q_proj", "v_proj", "k_proj", "o_proj"]
     
@@ -70,7 +70,7 @@ class TrainingConfig:
     
     # LoRA微调参数
     LORA_R = 8
-    LORA_ALPHA = 32
+    LORA_ALPHA = 16
     LORA_DROPOUT = 0.1
     LORA_TARGET_MODULES = ["q_proj", "v_proj", "k_proj", "o_proj"]
     
@@ -111,7 +111,7 @@ class TrainingConfig:
     
     # LoRA微调参数
     LORA_R = 8
-    LORA_ALPHA = 32
+    LORA_ALPHA = 16
     LORA_DROPOUT = 0.1
     LORA_TARGET_MODULES = ["q_proj", "v_proj", "k_proj", "o_proj"]
     
@@ -152,7 +152,7 @@ class TrainingConfig:
     
     # LoRA微调参数
     LORA_R = 8
-    LORA_ALPHA = 32
+    LORA_ALPHA = 16
     LORA_DROPOUT = 0.1
     LORA_TARGET_MODULES = ["q_proj", "v_proj", "k_proj", "o_proj"]
     
@@ -193,7 +193,7 @@ class TrainingConfig:
     
     # LoRA微调参数
     LORA_R = 8
-    LORA_ALPHA = 32
+    LORA_ALPHA = 16
     LORA_DROPOUT = 0.1
     LORA_TARGET_MODULES = ["q_proj", "v_proj", "k_proj", "o_proj"]
     
@@ -234,7 +234,7 @@ class TrainingConfig:
     
     # LoRA微调参数
     LORA_R = 8
-    LORA_ALPHA = 32
+    LORA_ALPHA = 16
     LORA_DROPOUT = 0.1
     LORA_TARGET_MODULES = ["q_proj", "v_proj", "k_proj", "o_proj"]
     
@@ -275,7 +275,7 @@ class TrainingConfig:
     
     # LoRA微调参数
     LORA_R = 8
-    LORA_ALPHA = 32
+    LORA_ALPHA = 16
     LORA_DROPOUT = 0.1
     LORA_TARGET_MODULES = ["q_proj", "v_proj", "k_proj", "o_proj"]
     
@@ -316,7 +316,7 @@ class TrainingConfig:
     
     # LoRA微调参数
     LORA_R = 8
-    LORA_ALPHA = 32
+    LORA_ALPHA = 16
     LORA_DROPOUT = 0.1
     LORA_TARGET_MODULES = ["q_proj", "v_proj", "k_proj", "o_proj"]
     
