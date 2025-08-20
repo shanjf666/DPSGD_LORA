@@ -106,7 +106,7 @@ class TrainingConfig:
     PER_DEVICE_EVAL_BATCH_SIZE = 1
     GRADIENT_ACCUMULATION_STEPS = 16
     NUM_TRAIN_EPOCHS = 2
-    LEARNING_RATE = 1e-4
+    LEARNING_RATE = 2e-4
     MAX_LENGTH = 256
     
     # LoRA微调参数
@@ -229,7 +229,7 @@ class TrainingConfig:
     PER_DEVICE_EVAL_BATCH_SIZE = 1
     GRADIENT_ACCUMULATION_STEPS = 16
     NUM_TRAIN_EPOCHS = 3
-    LEARNING_RATE = 1e-5
+    LEARNING_RATE = 1e-4
     MAX_LENGTH = 256
     
     # LoRA微调参数
@@ -270,7 +270,7 @@ class TrainingConfig:
     PER_DEVICE_EVAL_BATCH_SIZE = 1
     GRADIENT_ACCUMULATION_STEPS = 16
     NUM_TRAIN_EPOCHS = 3
-    LEARNING_RATE = 1e-6
+    LEARNING_RATE = 1e-5
     MAX_LENGTH = 256
     
     # LoRA微调参数
@@ -311,7 +311,7 @@ class TrainingConfig:
     PER_DEVICE_EVAL_BATCH_SIZE = 1
     GRADIENT_ACCUMULATION_STEPS = 16
     NUM_TRAIN_EPOCHS = 3
-    LEARNING_RATE = 1e-7
+    LEARNING_RATE = 1e-5
     MAX_LENGTH = 256
     
     # LoRA微调参数

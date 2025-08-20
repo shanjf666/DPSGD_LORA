@@ -41,7 +41,7 @@ def create_lora_model(model_path: str, config=None):
     
     # 配置LoRA参数
     lora_r = config.LORA_R if config else 8
-    lora_alpha = config.LORA_ALPHA if config else 32
+    lora_alpha = config.LORA_ALPHA if config else 16
     lora_dropout = config.LORA_DROPOUT if config else 0.1
     target_modules = config.LORA_TARGET_MODULES if config else ["q_proj", "v_proj", "k_proj", "o_proj"]
     
